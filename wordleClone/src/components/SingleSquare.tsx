@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface SingleSquareProps {
   letter: string;
@@ -17,22 +17,19 @@ function SingleSquare({
   funcColor,
   indexx,
   resGame,
-}: // resGame,
+}: 
 SingleSquareProps) {
   const [classSquare, setClassSquare] = useState("");
-  useEffect(() => {
-    setClassSquare("");
-    console.log("the bg color of the square has been reset");
-
-    // funcColor(indexx, setClassSquare);
-  }, [resGame]);
+  
   return (
     <div
       className={`sqaure ${funcColor(indexx, setClassSquare)} ${classSquare} `}
     >
-      {/* {rowGuess[idx] && rowGuess[idx].toLocaleUpperCase()} */}
+      
       {letter}
     </div>
+
+    
   );
 }
 

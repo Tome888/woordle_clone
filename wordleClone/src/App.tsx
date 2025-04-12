@@ -125,7 +125,10 @@ function App() {
           </IconButton>
 
           <Button
-            onClick={() => setStartNewGame(!startNewGame)}
+            onClick={() => {
+              setStartNewGame(!startNewGame)
+              
+              }}
             variant="outlined"
           >
             Play Again
@@ -137,7 +140,7 @@ function App() {
         {settings && (
           <div className="bgDropdown">
             <div className="selectOptions">
-              <p>Trys:</p>
+              <p>Try's:</p>
               <ToggleButtonGroup
                 color="primary"
                 value={theValue}
@@ -163,10 +166,12 @@ function App() {
             <Squares
               theWord={guessWord}
               theGuess={idx === rowTurn ? myGuess : []}
-              key={idx}
+              // key={idx}
+              key={`${startNewGame}-${idx}`}
               turn={{ rowTurn, indexx: idx }}
               winnerFunc={setDidWon}
               restartGame={startNewGame}
+              
             />
           );
         })}
