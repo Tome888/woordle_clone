@@ -1,11 +1,10 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import dataWords from "./assets/wordsData";
 import DataProp from "./types/dataType";
 import Squares from "./components/Squares";
 import {
   Button,
-  Drawer,
   IconButton,
   ToggleButton,
   ToggleButtonGroup,
@@ -72,9 +71,7 @@ function App() {
     };
   }, [myGuess, guessWord]);
 
-  useEffect(()=>{
-    console.log(rowTurn, "asaa")
-  },[rowTurn])
+
   useEffect(() => {
     setGuess([]);
     setGuessWord(null);
@@ -91,7 +88,7 @@ function App() {
     theTurn: number
   ) => {
     if (numberOfTrys.length === theTurn+1 && guessTheWordArr.every((value, index) => value !== myGuessArr[index])) {
-      return "looser";
+      return "loser";
     }
     if (guessTheWordArr.every((value, index) => value === myGuessArr[index])) {
       return "winner";
@@ -103,8 +100,16 @@ function App() {
     console.log(numTrys.length, rowTurn);
   }, [rowTurn]);
 
+  // const handleChange = (
+  //   _event: React.MouseEvent<HTMLElement>,
+  //   newValue: number | null
+  // ) => {
+  //   if (newValue !== null) {
+  //     setTheValue(newValue);
+  //     setNumTrys(new Array(newValue).fill(""));
+  //   }
+  // };
   const handleChange = (
-    _event: React.MouseEvent<HTMLElement>,
     newValue: number | null
   ) => {
     if (newValue !== null) {
@@ -127,7 +132,7 @@ function App() {
             ⚙️
           </IconButton>
 
-          <Button
+          {didWon&&<Button
             onClick={() => {
               setStartNewGame(!startNewGame)
               
@@ -135,14 +140,14 @@ function App() {
             variant="outlined"
           >
             Play Again
-          </Button>
+          </Button>}
         </div>
         <h1>Wordle-Clone</h1>
       </nav>
       <div className={`${settings} settingsDropdown`}>
         {settings && (
           <div className="bgDropdown">
-            <div className="selectOptions">
+            {/* <div className="selectOptions">
               <p>Try's:</p>
               <ToggleButtonGroup
                 color="primary"
@@ -155,6 +160,24 @@ function App() {
                 <ToggleButton value={5}>5</ToggleButton>
                 <ToggleButton value={6}>6</ToggleButton>
               </ToggleButtonGroup>
+              </div> */}
+              <div className="selectOptions">
+              <p>Try's:</p>
+
+              
+                <button className={theValue===4?"activeOption":''} onClick={()=>handleChange(4)}>4</button>
+                <button className={theValue===5?"activeOption":''} onClick={()=>handleChange(5)}>5</button>
+                <button className={theValue===6?"activeOption":''}  onClick={()=>handleChange(6)}>6</button>
+             
+            
+            </div>
+            <div className="selectOptions">
+              <p>Number Of Letters:</p>
+              
+                <button className={numOfLetters==="fourLetterWords"?"activeOption":''} onClick={()=>setNumOfLetters("fourLetterWords")}>4</button>
+                <button className={numOfLetters==="fiveLetterWords"?"activeOption":''} onClick={()=>setNumOfLetters("fiveLetterWords")}>5</button>
+                <button className={numOfLetters==="sixLetterWords"?"activeOption":''} onClick={()=>setNumOfLetters("sixLetterWords")}>6</button>
+             
             </div>
           </div>
         )}
@@ -169,7 +192,7 @@ function App() {
             <Squares
               theWord={guessWord}
               theGuess={idx === rowTurn ? myGuess : []}
-              // key={idx}
+              
               key={`${startNewGame}-${idx}`}
               turn={{ rowTurn, indexx: idx }}
               winnerFunc={setDidWon}
