@@ -72,6 +72,9 @@ function App() {
     };
   }, [myGuess, guessWord]);
 
+  useEffect(()=>{
+    console.log(rowTurn, "asaa")
+  },[rowTurn])
   useEffect(() => {
     setGuess([]);
     setGuessWord(null);
@@ -87,7 +90,7 @@ function App() {
     numberOfTrys: string[],
     theTurn: number
   ) => {
-    if (numberOfTrys.length === theTurn + 1) {
+    if (numberOfTrys.length === theTurn+1 && guessTheWordArr.every((value, index) => value !== myGuessArr[index])) {
       return "looser";
     }
     if (guessTheWordArr.every((value, index) => value === myGuessArr[index])) {
