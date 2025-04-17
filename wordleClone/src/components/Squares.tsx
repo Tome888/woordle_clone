@@ -17,7 +17,6 @@ function Squares({
   theWord,
   theGuess,
   turn,
-  winnerFunc,
   restartGame,
 }: SquaresProps) {
   const [rowGuess, setRowGuess] = useState<string[]>([]);

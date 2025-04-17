@@ -6,9 +6,8 @@ import Squares from "./components/Squares";
 import {
   Button,
   IconButton,
-  ToggleButton,
-  ToggleButtonGroup,
 } from "@mui/material";
+import Keyboard from "./components/Keyboard";
 
 function App() {
   const [settings, setSettings] = useState("");
@@ -25,6 +24,7 @@ function App() {
 
   const setGameWord = () => {
     if (!dataWords) return setGuessWord(null);
+    
 
     const randomNumber = Math.floor(
       Math.random() * dataWords[numOfLetters].length
@@ -33,6 +33,26 @@ function App() {
 
     setGuessWord(newWord.split(""));
   };
+
+  const typeFunc = (keyType:string)=>{
+    if(!guessWord)return
+    if (didWon) return;
+    if(keyType==="ENTER" && guessWord.length === myGuess.length){
+      setRowTurn(rowTurn + 1);
+          setGuess([]);
+          setDidWon(checkIfWinner(guessWord, myGuess, numTrys, rowTurn));
+          return
+        }
+        
+        if(keyType==="⇍"){setGuess(myGuess.slice(0, -1));
+          return
+        }
+        
+        if(keyType!=="⇍" && keyType !== "ENTER" && guessWord.length > myGuess.length)setGuess((prevGuess) => [...prevGuess, keyType.toLocaleLowerCase()]);
+
+
+
+  }
 
   useEffect(() => {
     const handleKeyUp = (e: KeyboardEvent) => {
@@ -201,6 +221,7 @@ function App() {
             />
           );
         })}
+        <Keyboard letterFunc={typeFunc}/>
     </>
   );
 }
