@@ -3,10 +3,7 @@ import "./App.css";
 import dataWords from "./assets/wordsData";
 import DataProp from "./types/dataType";
 import Squares from "./components/Squares";
-import {
-  Button,
-  IconButton,
-} from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import Keyboard from "./components/Keyboard";
 
 function App() {
@@ -24,7 +21,6 @@ function App() {
 
   const setGameWord = () => {
     if (!dataWords) return setGuessWord(null);
-    
 
     const randomNumber = Math.floor(
       Math.random() * dataWords[numOfLetters].length
@@ -34,25 +30,28 @@ function App() {
     setGuessWord(newWord.split(""));
   };
 
-  const typeFunc = (keyType:string)=>{
-    if(!guessWord)return
+  const typeFunc = (keyType: string) => {
+    if (!guessWord) return;
     if (didWon) return;
-    if(keyType==="ENTER" && guessWord.length === myGuess.length){
+    if (keyType === "ENTER" && guessWord.length === myGuess.length) {
       setRowTurn(rowTurn + 1);
-          setGuess([]);
-          setDidWon(checkIfWinner(guessWord, myGuess, numTrys, rowTurn));
-          return
-        }
-        
-        if(keyType==="⇍"){setGuess(myGuess.slice(0, -1));
-          return
-        }
-        
-        if(keyType!=="⇍" && keyType !== "ENTER" && guessWord.length > myGuess.length)setGuess((prevGuess) => [...prevGuess, keyType.toLocaleLowerCase()]);
+      setGuess([]);
+      setDidWon(checkIfWinner(guessWord, myGuess, numTrys, rowTurn));
+      return;
+    }
 
+    if (keyType === "⇍") {
+      setGuess(myGuess.slice(0, -1));
+      return;
+    }
 
-
-  }
+    if (
+      keyType !== "⇍" &&
+      keyType !== "ENTER" &&
+      guessWord.length > myGuess.length
+    )
+      setGuess((prevGuess) => [...prevGuess, keyType.toLocaleLowerCase()]);
+  };
 
   useEffect(() => {
     const handleKeyUp = (e: KeyboardEvent) => {
@@ -91,7 +90,6 @@ function App() {
     };
   }, [myGuess, guessWord]);
 
-
   useEffect(() => {
     setGuess([]);
     setGuessWord(null);
@@ -107,7 +105,10 @@ function App() {
     numberOfTrys: string[],
     theTurn: number
   ) => {
-    if (numberOfTrys.length === theTurn+1 && guessTheWordArr.every((value, index) => value !== myGuessArr[index])) {
+    if (
+      numberOfTrys.length === theTurn + 1 &&
+      guessTheWordArr.every((value, index) => value !== myGuessArr[index])
+    ) {
       return "loser";
     }
     if (guessTheWordArr.every((value, index) => value === myGuessArr[index])) {
@@ -120,18 +121,7 @@ function App() {
     console.log(numTrys.length, rowTurn);
   }, [rowTurn]);
 
-  // const handleChange = (
-  //   _event: React.MouseEvent<HTMLElement>,
-  //   newValue: number | null
-  // ) => {
-  //   if (newValue !== null) {
-  //     setTheValue(newValue);
-  //     setNumTrys(new Array(newValue).fill(""));
-  //   }
-  // };
-  const handleChange = (
-    newValue: number | null
-  ) => {
+  const handleChange = (newValue: number | null) => {
     if (newValue !== null) {
       setTheValue(newValue);
       setNumTrys(new Array(newValue).fill(""));
@@ -143,27 +133,37 @@ function App() {
         <div>
           <IconButton
             color="primary"
+            className="settingsButton"
             onClick={() =>
               settings === ""
                 ? rowTurn < 1 && setSettings("openSettings")
                 : setSettings("")
             }
           >
-            ⚙️
+            {settings ? "❌" : "⚙️"}
           </IconButton>
 
-          {didWon&&<Button
-            onClick={() => {
-              setStartNewGame(!startNewGame)
-              
+          {didWon && (
+            <IconButton
+              className="resetBtn"
+              onClick={() => {
+                setStartNewGame(!startNewGame);
               }}
-            variant="outlined"
-          >
-            Play Again
-          </Button>}
+            >
+              🔄️
+            </IconButton>
+          )}
         </div>
         <h1>Wordle-Clone</h1>
       </nav>
+      {settings && (
+        <div
+          onClick={() => {
+            settings === "" ? setSettings("openSettings") : setSettings("");
+          }}
+          className="mobilePopup"
+        ></div>
+      )}
       <div className={`${settings} settingsDropdown`}>
         {settings && (
           <div className="bgDropdown">
@@ -181,47 +181,81 @@ function App() {
                 <ToggleButton value={6}>6</ToggleButton>
               </ToggleButtonGroup>
               </div> */}
-              <div className="selectOptions">
-              <p>Try's:</p>
+            <div className="selectOptions">
+              <p>Number Of Try's:</p>
 
-              
-                <button className={theValue===4?"activeOption":''} onClick={()=>handleChange(4)}>4</button>
-                <button className={theValue===5?"activeOption":''} onClick={()=>handleChange(5)}>5</button>
-                <button className={theValue===6?"activeOption":''}  onClick={()=>handleChange(6)}>6</button>
-             
-            
+              <button
+                className={theValue === 4 ? "activeOption" : ""}
+                onClick={() => handleChange(4)}
+              >
+                4
+              </button>
+              <button
+                className={theValue === 5 ? "activeOption" : ""}
+                onClick={() => handleChange(5)}
+              >
+                5
+              </button>
+              <button
+                className={theValue === 6 ? "activeOption" : ""}
+                onClick={() => handleChange(6)}
+              >
+                6
+              </button>
             </div>
             <div className="selectOptions">
               <p>Number Of Letters:</p>
-              
-                <button className={numOfLetters==="fourLetterWords"?"activeOption":''} onClick={()=>setNumOfLetters("fourLetterWords")}>4</button>
-                <button className={numOfLetters==="fiveLetterWords"?"activeOption":''} onClick={()=>setNumOfLetters("fiveLetterWords")}>5</button>
-                <button className={numOfLetters==="sixLetterWords"?"activeOption":''} onClick={()=>setNumOfLetters("sixLetterWords")}>6</button>
-             
+
+              <button
+                className={
+                  numOfLetters === "fourLetterWords" ? "activeOption" : ""
+                }
+                onClick={() => setNumOfLetters("fourLetterWords")}
+              >
+                4
+              </button>
+              <button
+                className={
+                  numOfLetters === "fiveLetterWords" ? "activeOption" : ""
+                }
+                onClick={() => setNumOfLetters("fiveLetterWords")}
+              >
+                5
+              </button>
+              <button
+                className={
+                  numOfLetters === "sixLetterWords" ? "activeOption" : ""
+                }
+                onClick={() => setNumOfLetters("sixLetterWords")}
+              >
+                6
+              </button>
             </div>
           </div>
         )}
       </div>
 
-      <h1>My Guess- {myGuess}</h1>
-      <h2>Word to Guess- {guessWord}</h2>
+      {/* <h1>My Guess- {myGuess}</h1> */}
+      <h2>Word to Guess- {didWon && guessWord}</h2>
       <h2>{didWon}</h2>
-      {guessWord &&
-        numTrys.map((_, idx) => {
-          return (
-            <Squares
-              theWord={guessWord}
-              theGuess={idx === rowTurn ? myGuess : []}
-              
-              key={`${startNewGame}-${idx}`}
-              turn={{ rowTurn, indexx: idx }}
-              winnerFunc={setDidWon}
-              restartGame={startNewGame}
-              
-            />
-          );
-        })}
-        <Keyboard letterFunc={typeFunc}/>
+      <div className="gameHolder">
+        <div>
+          {guessWord &&
+            numTrys.map((_, idx) => {
+              return (
+                <Squares
+                  theWord={guessWord}
+                  theGuess={idx === rowTurn ? myGuess : []}
+                  key={`${startNewGame}-${idx}`}
+                  turn={{ rowTurn, indexx: idx }}
+                  winnerFunc={setDidWon}
+                  restartGame={startNewGame}
+                />
+              );
+            })}
+        </div>
+        <Keyboard letterFunc={typeFunc} />
+      </div>
     </>
   );
 }

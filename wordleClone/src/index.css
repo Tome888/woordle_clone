@@ -1,5 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
-
+/* @import url("https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap");
+:root {
+  --color-white: #f9f9f9;
+  --color-green: #22c55e;
+  --color-yellow: #facc15;
+  --color-gray: #6b7280;
+  --color-black: #111827;
+}
 * {
   box-sizing: border-box;
   font-family: "Poetsen One", sans-serif;
@@ -9,7 +15,7 @@
 
 body {
   margin: 0;
-  background-color: gray;
+  background-color: var(--color-gray);
   overflow: hidden;
 }
 
@@ -63,7 +69,24 @@ nav {
 .yellowBg {
   background-color: yellow;
 }
-
+.mobilePopup {
+  display: none;
+}
+.gameHolder {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  height: 85vh;
+  padding-top: 2rem;
+}
+.gameHolder > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 .settingsDropdown {
   display: flex;
   justify-content: center;
@@ -76,6 +99,7 @@ nav {
   backdrop-filter: blur(5px);
   position: fixed;
   border-radius: 5px;
+  z-index: 100;
 }
 .openSettings {
   height: 30vh;
@@ -87,25 +111,26 @@ nav {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  gap: 1rem;
 }
 
 .selectOptions {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
 }
 
-.optionStyle{
+.optionStyle {
   padding: 0.5rem;
   border-radius: 10px;
   border: 2px solid yellow;
 }
-.activeOption{
+.activeOption {
   border: 3px solid green !important;
   background-color: rgba(220, 220, 220, 0.086) !important;
-
 }
-.selectOptions>button{
+.selectOptions > button {
   padding: 0.25rem;
   border-radius: 10px;
   border: 3px solid yellow;
@@ -116,49 +141,389 @@ nav {
   background-color: transparent;
 }
 
-.selectOptions>button:hover{
- background-color: rgba(220, 220, 220, 0.086);
+.selectOptions > button:hover {
+  background-color: rgba(220, 220, 220, 0.086);
 }
 
-/* ============KEYBOARD============ */
-.keyboardHolder{
+.keyboardHolder {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  margin-top: 2rem;
 }
+.keyboardContainer {
+  background-color: rgba(255, 255, 255, 0.692);
+  width: 20%;
 
-
-.keyboardContainer{
-  background-color: white;
-  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0.25rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
-.keysRow{
+.keysRow {
   display: flex;
   align-items: center;
-  justify-content: space-evenly !important;
-  /* gap: 0.5rem; */
+  justify-content: space-evenly;
   width: 100%;
 }
 
-.keysRow>span{
-  font-size: 2rem;
-  border: 1px solid black;
-  width: 30px;
-  /* width: fit-content; */
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
+.keysRow > span {
+  font-size: 1.5rem;
+  width: 3rem;
+  height: 3rem;
+  color: var(--color-black);
+  border: 1px solid var(--color-black);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-
+  margin: 0.1rem;
+  box-sizing: border-box;
+  border-radius: 5px;
+  transition: 0.25s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.24);
 }
-.specialKey{
-width: fit-content !important;
+.keysRow > span:hover {
+  background-color: rgba(185, 185, 185, 0.603);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.253);
+}
+.specialKey {
+  width: fit-content !important;
+  padding: 0 0.75rem;
+  font-weight: bolder;
+}
+.settingsButton {
+  z-index: 101;
+}
+@media (max-width: 768px) {
+  .mobilePopup {
+    display: flex;
+    position: fixed;
+    background-color: rgba(107, 114, 128, 0.377);
+    backdrop-filter: blur(5px);
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100vh;
+    z-index: 100;
+    left: 50%;
+    top: 50%;
+  }
+  .keyboardContainer {
+    width: clamp(100%, 30vw, 30%);
+  }
+  .settingsDropdown {
+    width: 100%;
+
+    height: 0vh;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+  }
+  .bgDropdown {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    padding: 1rem;
+    border-radius: 10px;
+  }
+  .selectOptions > button {
+    color: var(--color-white);
+  }
+} */
+
+@import url("https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap");
+:root {
+  --color-white: #f9f9f9;
+  --color-green: rgb(49, 126, 68);
+  --color-yellow: #facc15;
+  --color-gray: #6b7280;
+  --color-black: #111827;
+}
+* {
+  box-sizing: border-box;
+  font-family: "Poetsen One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+body {
+  margin: 0;
+  background-color: var(--color-gray);
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+nav {
+  z-index: 100;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+nav > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sqaure {
+  width: 50px;
+  height: 50px;
+  border: 1px solid var(--color-black);
+  transition: 0.5s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flip {
+  transform: rotateX(360deg);
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.greenBg {
+  background-color: var(--color-green);
+}
+.yellowBg {
+  background-color: var(--color-yellow);
+}
+
+.mobilePopup {
+  display: none;
+}
+
+.gameHolder {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  height: 85vh;
+  padding-top: 2rem;
+}
+
+.gameHolder > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.settingsDropdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s ease-in-out;
+  width: 0%;
+  height: 0vh;
+  background-color: rgba(240, 255, 255, 0.5);
+  backdrop-filter: blur(5px);
+  position: fixed;
+  border-radius: 5px;
+  z-index: 100;
+}
+
+.openSettings {
+  height: 30vh;
+  width: 30%;
+}
+
+.bgDropdown {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.418
+  ); /* You can optionally adjust to a var with opacity */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+.resetBtn {
+  background-color: transparent;
+  color: var(--color-black);
+  /* border: 2px solid var(--color-black); */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25); */
+  transition: all 0.2s ease !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+}
+
+.resetBtn:hover {
+  background-color: var(--color-yellow);
+  /* border-color: var(--color-green); */
+  transform: rotate(90deg);
+}
+.selectOptions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.optionStyle {
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: 2px solid var(--color-yellow);
+}
+
+.activeOption {
+  border: 3px solid var(--color-green) !important;
+  background-color: rgba(220, 220, 220, 0.086) !important;
+}
+
+.selectOptions > button {
+  padding: 0.25rem;
+  border-radius: 10px;
+  border: 3px solid var(--color-yellow);
+  font-size: 1rem;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.selectOptions > button:hover {
+  background-color: rgba(220, 220, 220, 0.086);
+}
+
+/* ============KEYBOARD============ */
+
+.keyboardHolder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.keyboardContainer {
+  background-color: rgba(
+    249,
+    249,
+    249,
+    0.692
+  ); /* var(--color-white) with opacity */
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.keysRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.keysRow > span {
+  font-size: 1.5rem;
+  width: 3rem;
+  height: 3rem;
+  color: var(--color-black);
+  border: 1px solid var(--color-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0.1rem;
+  box-sizing: border-box;
+  border-radius: 5px;
+  transition: 0.25s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.24);
+}
+
+.keysRow > span:hover {
+  background-color: rgba(185, 185, 185, 0.603);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.253);
+}
+
+.specialKey {
+  width: fit-content !important;
+  padding: 0 0.75rem;
+  font-weight: bolder;
+}
+
+.settingsButton {
+  z-index: 101;
+}
+
+@media (max-width: 768px) {
+  .mobilePopup {
+    display: flex;
+    position: fixed;
+    background-color: rgba(107, 114, 128, 0.377); /* color-gray with opacity */
+    backdrop-filter: blur(5px);
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100vh;
+    z-index: 100;
+    left: 50%;
+    top: 50%;
+  }
+
+  .keyboardContainer {
+    width: clamp(100%, 30vw, 30%);
+  }
+
+  .settingsDropdown {
+    width: 100%;
+    height: 0vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .bgDropdown {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  .selectOptions > button {
+    color: var(--color-white);
+  }
 }
