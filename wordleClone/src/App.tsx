@@ -3,8 +3,9 @@ import "./App.css";
 import dataWords from "./assets/wordsData";
 import DataProp from "./types/dataType";
 import Squares from "./components/Squares";
-import { Button, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import Keyboard from "./components/Keyboard";
+import ConfettiCelebration from "./components/ConfettiCelebration";
 
 function App() {
   const [settings, setSettings] = useState("");
@@ -18,10 +19,13 @@ function App() {
 
   const [didWon, setDidWon] = useState("");
   const [startNewGame, setStartNewGame] = useState(false);
+  const [fullDataWords, setFullDataWords] = useState<string[]>([]);
+  const [foundWord, setFoundWord] = useState(true);
 
   const setGameWord = () => {
     if (!dataWords) return setGuessWord(null);
 
+    setFullDataWords(dataWords[numOfLetters]);
     const randomNumber = Math.floor(
       Math.random() * dataWords[numOfLetters].length
     );
@@ -29,6 +33,14 @@ function App() {
 
     setGuessWord(newWord.split(""));
   };
+
+  const checkIfInDb = () => {
+    const toStrGuess = myGuess.join("");
+    return fullDataWords.includes(toStrGuess);
+  };
+  useEffect(() => {
+    console.log(guessWord, "WORD TO GUESS");
+  }, [guessWord]);
 
   const typeFunc = (keyType: string) => {
     if (!guessWord) return;
@@ -167,20 +179,6 @@ function App() {
       <div className={`${settings} settingsDropdown`}>
         {settings && (
           <div className="bgDropdown">
-            {/* <div className="selectOptions">
-              <p>Try's:</p>
-              <ToggleButtonGroup
-                color="primary"
-                value={theValue}
-                exclusive
-                onChange={handleChange}
-                aria-label="Platform"
-              >
-                <ToggleButton value={4}>4</ToggleButton>
-                <ToggleButton value={5}>5</ToggleButton>
-                <ToggleButton value={6}>6</ToggleButton>
-              </ToggleButtonGroup>
-              </div> */}
             <div className="selectOptions">
               <p>Number Of Try's:</p>
 
@@ -236,8 +234,15 @@ function App() {
       </div>
 
       {/* <h1>My Guess- {myGuess}</h1> */}
-      <h2>Word to Guess- {didWon && guessWord}</h2>
-      <h2>{didWon}</h2>
+      {/* <h2>{guessWord}</h2> */}
+      <div className="gameInfoCointainer">
+        <h2>{didWon && `The word is: ${guessWord && guessWord.join("")}`}</h2>
+        {/* <h2>{didWon === "winner" && "WIN!"}</h2> */}
+        {didWon === "winner" && <h2 className="winHtwo">WIN!</h2>}
+
+        {didWon === "loser" && <h2 className="loseHtwo">Lose ☹️</h2>}
+      </div>
+
       <div className="gameHolder">
         <div>
           {guessWord &&
@@ -256,6 +261,7 @@ function App() {
         </div>
         <Keyboard letterFunc={typeFunc} />
       </div>
+      <ConfettiCelebration winner={didWon} />
     </>
   );
 }

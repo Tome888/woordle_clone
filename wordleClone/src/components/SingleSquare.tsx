@@ -12,24 +12,15 @@ interface SingleSquareProps {
   resGame: boolean;
 }
 
-function SingleSquare({
-  letter,
-  funcColor,
-  indexx,
-  resGame,
-}: 
-SingleSquareProps) {
+function SingleSquare({ letter, funcColor, indexx }: SingleSquareProps) {
   const [classSquare, setClassSquare] = useState("");
-  
+
   return (
     <div
       className={`sqaure ${funcColor(indexx, setClassSquare)} ${classSquare} `}
     >
-      
       {letter}
     </div>
-
-    
   );
 }
 
