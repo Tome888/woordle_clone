@@ -13,21 +13,14 @@ interface SquaresProps {
   restartGame: boolean;
 }
 
-function Squares({
-  theWord,
-  theGuess,
-  turn,
-  restartGame,
-}: SquaresProps) {
+function Squares({ theWord, theGuess, turn, restartGame }: SquaresProps) {
   const [rowGuess, setRowGuess] = useState<string[]>([]);
 
   useEffect(() => {
     if (turn.rowTurn === turn.indexx) setRowGuess([...theGuess]);
-    // setRowGuess([]);
   }, [theGuess]);
   useEffect(() => {
     setRowGuess([]);
-    console.log("the guess of the row has been reset");
   }, [restartGame]);
 
   const colorFunction = (
@@ -57,9 +50,6 @@ function Squares({
 
   return (
     <div className={`line`}>
-      {/* theWord:{theWord}
-      {"    "}theGuess:{theGuess} */}
-
       {theWord.map((_, idx) => {
         return (
           <SingleSquare

@@ -20,7 +20,6 @@ function App() {
   const [didWon, setDidWon] = useState("");
   const [startNewGame, setStartNewGame] = useState(false);
   const [fullDataWords, setFullDataWords] = useState<string[]>([]);
-  const [foundWord, setFoundWord] = useState(true);
 
   const setGameWord = () => {
     if (!dataWords) return setGuessWord(null);
@@ -36,7 +35,8 @@ function App() {
 
   const checkIfInDb = () => {
     const toStrGuess = myGuess.join("");
-    return fullDataWords.includes(toStrGuess);
+    const bool = fullDataWords.includes(toStrGuess);
+    return !bool;
   };
   useEffect(() => {
     console.log(guessWord, "WORD TO GUESS");
@@ -46,6 +46,7 @@ function App() {
     if (!guessWord) return;
     if (didWon) return;
     if (keyType === "ENTER" && guessWord.length === myGuess.length) {
+      if (checkIfInDb()) return alert("Word not in DB");
       setRowTurn(rowTurn + 1);
       setGuess([]);
       setDidWon(checkIfWinner(guessWord, myGuess, numTrys, rowTurn));
@@ -81,6 +82,7 @@ function App() {
         }
 
         if (e.key === "Enter" && guessWord.length === myGuess.length) {
+          if (checkIfInDb()) return alert("Word not in DB");
           setRowTurn(rowTurn + 1);
           setGuess([]);
           setDidWon(checkIfWinner(guessWord, myGuess, numTrys, rowTurn));
@@ -108,7 +110,6 @@ function App() {
     setGameWord();
     setRowTurn(0);
     setDidWon("");
-    console.log(guessWord);
   }, [numOfLetters, startNewGame]);
 
   const checkIfWinner = (
@@ -129,9 +130,6 @@ function App() {
       return "";
     }
   };
-  useEffect(() => {
-    console.log(numTrys.length, rowTurn);
-  }, [rowTurn]);
 
   const handleChange = (newValue: number | null) => {
     if (newValue !== null) {
@@ -233,11 +231,9 @@ function App() {
         )}
       </div>
 
-      {/* <h1>My Guess- {myGuess}</h1> */}
-      {/* <h2>{guessWord}</h2> */}
       <div className="gameInfoCointainer">
         <h2>{didWon && `The word is: ${guessWord && guessWord.join("")}`}</h2>
-        {/* <h2>{didWon === "winner" && "WIN!"}</h2> */}
+
         {didWon === "winner" && <h2 className="winHtwo">WIN!</h2>}
 
         {didWon === "loser" && <h2 className="loseHtwo">Lose ☹️</h2>}
